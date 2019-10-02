@@ -23,7 +23,7 @@ Running the script is pretty simple:
   > cd HashR8  
   > chmod 755 HashR8.sh  
   > OR chmod +x HashR8.sh  
-    (^^ This step is needed to give your user execute permission, either one will work)  
+  (^^ This step is needed to give your user execute permission, either one will work)  
   > ./HashR8.sh  
 
 
