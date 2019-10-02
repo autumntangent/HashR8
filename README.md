@@ -1,13 +1,11 @@
-README.md
+# HASHR8  
 
-#HASHR8  
+## README
 
-##README
-
-###A simple shell script to assist with generating/creating hash lists, either randomly or with given strings.
+### A simple shell script to assist with generating/creating hash lists, either randomly or with given strings.
 
 
-##About
+## About
 
 HASHR8 is a **BASH** script that will easily generate a hash list either randomly, with given strings, or both.
 
@@ -16,7 +14,7 @@ You can change the **$PATH** to the $HASHLIST at any time while running the scri
 All hashes will be **APPENDED** to the given $HASHLIST, so all hashes and/or other content will remain in the file.
 
 
-##Configuration
+## Configuration
 
 Running the script is pretty simple:
 
