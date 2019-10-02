@@ -28,7 +28,7 @@ Running the script is pretty simple:
    - git clone https://github.com/autumntangent/HashR8.git  
    - cd HashR8  
    - chmod 755 HashR8.sh  
-         OR chmod +x HashR8.sh  
+         **OR** chmod +x HashR8.sh  
    #*This step is needed to give your user execute permission, either one will work*  
    - ./HashR8.sh  
 
