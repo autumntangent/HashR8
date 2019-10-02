@@ -8,6 +8,7 @@
 ## About
 
 HASHR8 is a **BASH** script that will easily generate a hash list either randomly, with given strings, or both.
+The default hashing algorithm used is **MD5**.  
 
 You can change the **$PATH** to the **$HASHLIST** at any time while running the script OR you can change it in the script by 
 doing this:  
@@ -20,7 +21,7 @@ All hashes will be **APPENDED** to the given $HASHLIST, so all hashes and/or oth
 
 **This script has only been tested on MACOSX/UNIX systems using BASH.**
 
-## Configuration
+## Configuration && Running The Script
 
 Running the script is pretty simple:
 
