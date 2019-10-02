@@ -50,9 +50,9 @@ If you  choose to use the random hash option, it works by generating random stri
 
 The **default** is to loop the function 100 times, giving you 100 hashes.  
 To change this, edit the script and look for something like this  
-> for run in {1..x} *#where x would be the amount of hashes you want  *
+> for run in {1..x} *#where x would be the amount of hashes you want*  
 > do  
-   > gen_ranhash_list  
+ \\\  > gen_ranhash_list  
 > done  
    
 
