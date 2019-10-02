@@ -9,7 +9,12 @@
 
 HASHR8 is a **BASH** script that will easily generate a hash list either randomly, with given strings, or both.
 
-You can change the **$PATH** to the **$HASHLIST** at any time while running the script.
+You can change the **$PATH** to the **$HASHLIST** at any time while running the script OR you can change it in the script by 
+doing this:  
+> nano/vim HASHR8.sh  
+You can change this by inputting your desired value under the **$VARIABLES** that are named:  
+> PATH=""  
+> HASHLIST=""  
 
 All hashes will be **APPENDED** to the given $HASHLIST, so all hashes and/or other content will remain in the file. 
 
@@ -23,7 +28,7 @@ Running the script is pretty simple:
    cd HashR8  
    chmod 755 HashR8.sh  
    OR chmod +x HashR8.sh  
-#This step is needed to give your user execute permission, either one will work 
+   #*This step is needed to give your user execute permission, either one will work*  
    ./HashR8.sh  
 
 
@@ -33,8 +38,5 @@ Running the script is pretty simple:
 
 I left comments throughout the script to assist with tweaking if need be.
 
-### Defaults
 
-DIR=$PWD 
-HASHLIST=""
 
