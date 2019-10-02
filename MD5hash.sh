@@ -76,6 +76,8 @@ do
 			echo -e "HASH FILE IS CURRENTLY SET TO ${Green}${HASHLIST}"
 			echo -e "${Cyan}DEFAULT IS SET TO GENERATE A LIST OF 100 HASHES"
 			echo -e "${Cyan}GENERATING RANDOM HASH LIST..."
+				#Starts loop and sets the amount of time to run the gen_ranhash_list function
+				#Default is set to 100, if you want more or less random hashes change the 100 to desired number
 				for run in {1..100}
 				do
 					gen_ranhash_list
