@@ -48,12 +48,12 @@ You can set it as a file that already exists, or if the file doesnt exist, the s
 
 If you  choose to use the random hash option, it works by generating random strings, and then converting those random strings into a hash.  
 
-The **default** is to loop the function 100 times, giving you 100 hashes.
-To change this, edit the script and look for something like this
-> for run in {1..x} #where x would be the amount of hashes you want
-> do
->     gen_ranhash_list
-> done
+The **default** is to loop the function 100 times, giving you 100 hashes.  
+To change this, edit the script and look for something like this  
+> for run in {1..x} #where x would be the amount of hashes you want  
+> do  
+>     gen_ranhash_list  
+> done  
    
 
 
