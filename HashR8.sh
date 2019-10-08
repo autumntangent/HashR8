@@ -11,19 +11,32 @@ Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan      
 
 DIR="$PWD"
-HASHLIST=""
+HASHLIST="HASHES"
 MENU="\nENTER [8] TO SET OR CHANGE THE FILE TO SAVE HASHES TO\nENTER [1] TO GENERATE HASH OF A GIVEN STRING\nENTER [2] TO GENERATE RANDOM HASHES\nENTER [0] TO EXIT\n "
 
-gen_ranhash_list() {
+gen_md5_list() {
 
 	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | md5 2>&1 | tee -a "$HASHLIST"
 }
 
+
+gen_sha1_list() {
+
+	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | shasum -a 1 2>&1 | cut -c 1-40| tee -a "$HASHLIST"
+
+}
+
+
+gen_sha256_list() {
+
+	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | shasum -a 256 2>&1 | cut -c 1-64| tee -a "$HASHLIST"
+}
+
+
 md5_hash_string() {
 
-	touch nullfile.txt
-	md5 -s $STRING > nullfile.txt | awk -F "= " '{print $2}' nullfile.txt >> "$HASHLIST" | tee -a "$HASHLIST"
-		rm -f nullfile.txt
+	echo ${STRING} | md5 2>&1 | tee -a "$HASHLIST"
+	
 
 }
 banner() {
@@ -41,7 +54,7 @@ banner() {
 	 echo
 }
 print_menu() {
-	echo -e "\n\n${Purple}MD5 HASH GENERATOR\n"
+	echo -e "\n\n${Purple}HASHR8 HASH GENERATOR\n"
 	if [[ -n "$HASHLIST" ]]; then
 		echo -e ${Green}"HASH LIST FILE NAME SET AS: ${HASHLIST}"
 		echo -e "${Cyan}${MENU}"
@@ -76,6 +89,8 @@ ${Blue}enter 1 to set it now OR"
 		fi
 }
 
+ALGLS = { "MD5", "SHA1", "SHA256" }
+
 banner
 print_menu
 while [ "$INP" != "0" ];
@@ -87,27 +102,45 @@ do
 	while [ "$INP" == "1" ]
 		do
 			echo -e "ENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
-			echo -e "${Red}OR ENTER 0 TO RETURN TO THE MENU"
+			echo -e "${Green}OR ENTER 0 TO RETURN TO THE MENU"
 			read STRING
-			md5_hash_string
+			echo -e "YOUR MD5 HASH OF THE STRING ${Purple}${STRING} ${Reset}IS:\n"
+			echo -e "${Cyan}" | md5_hash_string
+			echo -e "\n\n"
 			if [[ "$STRING" == "0" ]]; then
 				break
 			fi				
 		done
 	fi
 	if [[ "$INP" == "2" ]]; then
-		echo -e "${Cyan}READY TO GENERATE RANDOM MD5 HASHES!"
+		echo -e "${Cyan}READY TO GENERATE RANDOM HASHES!"
 		echo -e "HASH FILE IS CURRENTLY SET TO ${Green}${HASHLIST}"
 		echo -e "${Cyan}DEFAULT IS SET TO GENERATE A LIST OF 100 HASHES"
-		echo -e "${Cyan}GENERATING RANDOM HASH LIST..."
+		echo -e "\n\n${Purple}SELECT A HASHING ALGORITHM TO BEGIN GENERATING HASHES"
+		echo -e "\n[1] MD5"
+		echo -e "[2] SHA1"
+		echo -e "[3] SHA256"
+		read ALG
+		echo -e "\n${Green}GENERATING RANDOM HASH LIST...\n"
 			#Starts loop and sets the amount of time to run the gen_ranhash_list function
 			#Default is set to 100, if you want more or less random hashes change the 100 to desired number
-		for run in {1..100}
+		for run in {0..100};
 		do
-			gen_ranhash_list
+			if [[ "$ALG" == "1" ]]; then
+				gen_md5_list
+			elif [[ "$ALG" == "2" ]]; then
+				gen_sha1_list
+			elif [[ "$ALG" == "3" ]]; then
+				gen_sha256_list
+			fi
 		done
 	fi
 	print_menu
+	if [[ "$INP" == "0" ]]; then
+		echo -e "${Reset}"
+		break
+	fi
+
 done
 
 
