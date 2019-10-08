@@ -2,19 +2,20 @@
 
 #MD5 HASH & HASH LIST GENERATOR
 
-# Reset
-Reset='\033[0m'       # Text Reset
-Red="\033[0;31m"          # Red
-Green='\033[0;32m'        # Green
-Blue='\033[0;34m'         # Blue
-Purple='\033[0;35m'       # Purple
-Cyan='\033[0;36m'         # Cyan      
+Red="\033[0;31m"          
+Green='\033[0;32m'        
+Blue='\033[0;34m'         
+Purple='\033[0;35m'      
+Cyan='\033[0;36m'           
+
+#VARIABLES
 
 DIR="$PWD"
 HASHLIST="HASHES"
 MENU="\nENTER [8] TO SET OR CHANGE THE FILE TO SAVE HASHES TO\nENTER [1] TO GENERATE HASH OF A GIVEN STRING\nENTER [2] TO GENERATE RANDOM HASHES\nENTER [0] TO EXIT\n "
 
 gen_md5_list() {
+
 
 	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | md5 2>&1 | tee -a "$HASHLIST"
 }
