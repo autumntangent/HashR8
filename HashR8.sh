@@ -11,7 +11,7 @@ Cyan='\033[0;36m'
 #VARIABLES
 
 DIR="$PWD"
-HASHLIST="HASHES.TXT"
+HASHLIST=""
 MENU="\nENTER [8] TO SET OR CHANGE THE FILE TO SAVE HASHES TO\nENTER [1] TO GENERATE HASH OF A GIVEN STRING\nENTER [2] TO GENERATE RANDOM HASHES\nENTER [0] TO EXIT\n "
 
 gen_md5_list() {
@@ -106,14 +106,20 @@ do
 			echo -e "ENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
 			echo -e "${Green}OR ENTER 0 TO RETURN TO THE MENU"
 			read STRING
-			echo -e "YOUR MD5 HASH OF THE STRING:\n"
-			echo -e "${Purple}${STRING}"
-			echo -e "${Cyan}\n\n"
-			md5_hash_string
-			echo -e "\n"
 			if [[ "$STRING" == "0" ]]; then
 				break
-			fi				
+			fi
+			while [ "$STRING" != "0" ]; 
+			do
+				if [[ "$STRING" == "0" ]]; then
+					break
+				fi
+				echo -e "YOUR MD5 HASH OF THE STRING:\n"
+				echo -e "${Purple}${STRING}"
+				echo -e "${Cyan}\n\n"
+				md5_hash_string
+				break
+			done
 		done
 	fi
 	if [[ "$INP" == "2" ]]; then
