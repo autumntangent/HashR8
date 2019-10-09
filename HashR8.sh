@@ -2,6 +2,7 @@
 
 #MD5 HASH & HASH LIST GENERATOR
 
+Reset="\033[0;0m"
 Red="\033[0;31m"          
 Green='\033[0;32m'        
 Blue='\033[0;34m'         
@@ -54,19 +55,36 @@ banner() {
 	 echo
 	 echo
 }
-print_menu() {
+init_print_menu() {
 	echo -e "\n\n${Purple}HASHR8 HASH GENERATOR\n"
 	if [[ -n "$HASHLIST" ]]; then
-		echo -e ${Green}"HASH LIST FILE NAME SET AS: ${HASHLIST}"
+		echo -e "${Green}HASH LIST FILE NAME SET AS: ${HASHLIST}"
 		echo -e "${Cyan}${MENU}"
 		read INP
+		echo -e "${Reset}"
 	elif [[ -z "$HASHLIST" ]]; then
-		echo -e "${Red}NO HASH FILE SET!!!\PLEASE ENTER NAME OF HASHLIST FILE TO APPEND HASHES TO"
-		read HASHLIST
-		echo -e "${Green}HASH FILE SET AS: ${HASHLIST}"
-		echo -e "${Cyan}${MENU}"
-		read INP
+		while [ -z "$HASHLIST" ];
+		do
+			echo -e "${Red}NO HASH FILE SET!!! PLEASE ENTER A FILE NAME TO APPEND HASHES TO"
+			echo -e "I THE FILE NAME DOESNT EXIST, IT WILL BE CREATED"
+			read HASHLIST
+			echo -e "${Reset}"
+		done
 	fi
+	echo -e "${Green}HASH FILE SET AS: ${HASHLIST}"
+	echo -e "${Cyan}${MENU}"
+	echo -e "${Reset}"
+	read INP
+}
+
+print_menu(){
+
+	echo -e "\n\n${Purple}HASHR8 HASH GENERATOR\n"
+	echo -e "${Green}HASH FILE SET AS: ${HASHLIST}"
+	echo -e "${Cyan}${MENU}"
+	echo -e "${Reset}"
+	read INP
+
 }
 
 init_list() {
@@ -95,16 +113,16 @@ A2="SHA1"
 A3="SHA256"
 
 banner
-print_menu
+init_print_menu
 while [ "$INP" != "0" ];
 do
 	if [[ "$INP" == "8" ]]; then
 		init_list
 	fi
 	if [[ "$INP" == "1" ]]; then
-	while [ "$INP" == "1" ]
+		while [ "$INP" == "1" ]
 		do
-			echo -e "ENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
+			echo -e "\nENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
 			echo -e "${Green}OR ENTER 0 TO RETURN TO THE MENU"
 			read STRING
 			if [[ "$STRING" == "0" ]]; then
@@ -156,11 +174,6 @@ do
 		done
 	fi
 	print_menu
-	if [[ "$INP" == "0" ]]; then
-		echo -e "${Reset}"
-		break
-	fi
-
 done
 
 
