@@ -14,6 +14,7 @@ DIR="$PWD"
 HASHLIST=""
 MENU="\nENTER [8] TO SET OR CHANGE THE FILE TO SAVE HASHES TO\nENTER [1] TO GENERATE HASH OF A GIVEN STRING\nENTER [2] TO GENERATE RANDOM HASHES\nENTER [0] TO EXIT\n "
 
+
 gen_md5_list() {
 
 	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | md5 2>&1 | tee -a "$HASHLIST"
@@ -140,7 +141,8 @@ do
 		if [[ "$ALG" == "3" ]]; then
 			echo -e "\n${Green}GENERATING RANDOM ${A3} HASH LIST...\n"
 		fi
-			#Starts loop and sets the amount of time to run the gen_ranhash_list function
+			#Starts loop and sets the amount of times to run the 
+			#gen_*_list function(s)
 			#Default is set to 100, if you want more or less random hashes change the 100 to desired number
 		for run in {0..100};
 		do
