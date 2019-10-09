@@ -11,11 +11,10 @@ Cyan='\033[0;36m'
 #VARIABLES
 
 DIR="$PWD"
-HASHLIST="HASHES"
+HASHLIST="HASHES.TXT"
 MENU="\nENTER [8] TO SET OR CHANGE THE FILE TO SAVE HASHES TO\nENTER [1] TO GENERATE HASH OF A GIVEN STRING\nENTER [2] TO GENERATE RANDOM HASHES\nENTER [0] TO EXIT\n "
 
 gen_md5_list() {
-
 
 	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | md5 2>&1 | tee -a "$HASHLIST"
 }
@@ -90,7 +89,9 @@ ${Blue}enter 1 to set it now OR"
 		fi
 }
 
-ALGLS = { "MD5", "SHA1", "SHA256" }
+A1="MD5"
+A2="SHA1"
+A3="SHA256"
 
 banner
 print_menu
@@ -105,9 +106,11 @@ do
 			echo -e "ENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
 			echo -e "${Green}OR ENTER 0 TO RETURN TO THE MENU"
 			read STRING
-			echo -e "YOUR MD5 HASH OF THE STRING ${Purple}${STRING} ${Reset}IS:\n"
-			echo -e "${Cyan}" | md5_hash_string
-			echo -e "\n\n"
+			echo -e "YOUR MD5 HASH OF THE STRING:\n"
+			echo -e "${Purple}${STRING}"
+			echo -e "${Cyan}\n\n"
+			md5_hash_string
+			echo -e "\n"
 			if [[ "$STRING" == "0" ]]; then
 				break
 			fi				
@@ -122,7 +125,15 @@ do
 		echo -e "[2] SHA1"
 		echo -e "[3] SHA256"
 		read ALG
-		echo -e "\n${Green}GENERATING RANDOM HASH LIST...\n"
+		if [[ "$ALG" == "1" ]]; then
+			echo -e "\n${Green}GENERATING RANDOM ${A1} HASH LIST...\n"
+		fi
+		if [[ "$ALG" == "2" ]]; then
+			echo -e "\n${Green}GENERATING RANDOM ${A2} HASH LIST...\n"
+		fi
+		if [[ "$ALG" == "3" ]]; then
+			echo -e "\n${Green}GENERATING RANDOM ${A3} HASH LIST...\n"
+		fi
 			#Starts loop and sets the amount of time to run the gen_ranhash_list function
 			#Default is set to 100, if you want more or less random hashes change the 100 to desired number
 		for run in {0..100};
