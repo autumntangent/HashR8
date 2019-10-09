@@ -55,27 +55,6 @@ banner() {
 	 echo
 	 echo
 }
-init_print_menu() {
-	echo -e "\n\n${Purple}HASHR8 HASH GENERATOR\n"
-	if [[ -n "$HASHLIST" ]]; then
-		echo -e "${Green}HASH LIST FILE NAME SET AS: ${HASHLIST}"
-		echo -e "${Cyan}${MENU}"
-		read INP
-		echo -e "${Reset}"
-	elif [[ -z "$HASHLIST" ]]; then
-		while [ -z "$HASHLIST" ];
-		do
-			echo -e "${Red}NO HASH FILE SET!!! PLEASE ENTER A FILE NAME TO APPEND HASHES TO"
-			echo -e "I THE FILE NAME DOESNT EXIST, IT WILL BE CREATED"
-			read HASHLIST
-			echo -e "${Reset}"
-		done
-	fi
-	echo -e "${Green}HASH FILE SET AS: ${HASHLIST}"
-	echo -e "${Cyan}${MENU}"
-	echo -e "${Reset}"
-	read INP
-}
 
 print_menu(){
 
@@ -83,8 +62,6 @@ print_menu(){
 	echo -e "${Green}HASH FILE SET AS: ${HASHLIST}"
 	echo -e "${Cyan}${MENU}"
 	echo -e "${Reset}"
-	read INP
-
 }
 
 init_list() {
@@ -113,7 +90,17 @@ A2="SHA1"
 A3="SHA256"
 
 banner
-init_print_menu
+
+while [ -z "$HASHLIST" ];
+do
+	echo -e "\n\n${Purple}HASHR8 HASH GENERATOR\n"
+	echo -e "${Red}NO HASH FILE SET!!! PLEASE ENTER A FILE NAME TO APPEND HASHES TO"
+	echo -e "I THE FILE NAME DOESNT EXIST, IT WILL BE CREATED"
+	read HASHLIST
+	echo -e "${Reset}"
+done
+print_menu
+read INP
 while [ "$INP" != "0" ];
 do
 	if [[ "$INP" == "8" ]]; then
@@ -174,6 +161,7 @@ do
 		done
 	fi
 	print_menu
+	read INP
 done
 
 
