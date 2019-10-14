@@ -15,29 +15,42 @@ DIR="$PWD"
 HASHLIST=""
 MENU="\nENTER [8] TO SET OR CHANGE THE FILE TO SAVE HASHES TO\nENTER [1] TO GENERATE HASH OF A GIVEN STRING\nENTER [2] TO GENERATE RANDOM HASHES\nENTER [0] TO EXIT\n "
 
-
 gen_md5_list() {
 
-	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | md5 2>&1 | tee -a "$HASHLIST"
+	LC_CTYPE=C tr -dc 'A-Za-z0-9!@#$%^&*?' < /dev/urandom | fold -w ${1:-12} | head -n 1 | md5 2>&1 | tee -a "$HASHLIST"
 }
 
 
 gen_sha1_list() {
 
-	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | shasum -a 1 2>&1 | cut -c 1-40| tee -a "$HASHLIST"
+	LC_CTYPE=C tr -dc 'A-Za-z0-9!@#$%^&*?' < /dev/urandom | fold -w ${1:-12} | head -n 1 | shasum -a 1 2>&1 | cut -c 1-40| tee -a "$HASHLIST"
 
 }
 
 
 gen_sha256_list() {
 
-	LC_CTYPE=C tr -dc A-Za-z0-9 < /dev/urandom | fold -w ${1:-10} | head -n 1 | shasum -a 256 2>&1 | cut -c 1-64| tee -a "$HASHLIST"
+	LC_CTYPE=C tr -dc 'A-Za-z0-9!@#$%^&*?' < /dev/urandom | fold -w ${1:-12} | head -n 1 | shasum -a 256 2>&1 | cut -c 1-64| tee -a "$HASHLIST"
 }
 
 
 md5_hash_string() {
 
 	echo ${STRING} | md5 2>&1 | tee -a "$HASHLIST"
+	
+
+}
+
+s1_hash_string() {
+
+	echo ${STRING} | shasum -a 1 2>&1 | cut -c 1-40 | tee -a "$HASHLIST"
+	
+
+}
+
+s256_hash_string() {
+
+	echo ${STRING} | shasum -a 256 2>&1 | cut -c 1-64 | tee -a "$HASHLIST"
 	
 
 }
@@ -107,27 +120,78 @@ do
 		init_list
 	fi
 	if [[ "$INP" == "1" ]]; then
-		while [ "$INP" == "1" ]
-		do
-			echo -e "\nENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
-			echo -e "${Green}OR ENTER 0 TO RETURN TO THE MENU"
-			read STRING
-			if [[ "$STRING" == "0" ]]; then
-				break
-			fi
-			while [ "$STRING" != "0" ]; 
-			do
+		echo -e "${Green}SELECT A HASHING ALGORITHM"
+		echo -e "\n[1] MD5"
+		echo -e "[2] SHA1"
+		echo -e "[3] SHA256"
+		read AGR
+		while [ "$INP" == "1" ]; do
+			if [[ "$AGR" == "1" ]]; then
+				echo -e "${Blue}SELECTED HASH ALGORITHM: MD5"
+				echo -e "${Green}\nENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
+				echo -e "ENTER 0 TO RETURN TO THE MAIN MENU"
+				read STRING
 				if [[ "$STRING" == "0" ]]; then
 					break
 				fi
-				echo -e "YOUR MD5 HASH OF THE STRING:\n"
-				echo -e "${Purple}${STRING}"
-				echo -e "${Cyan}\n\n"
-				md5_hash_string
-				break
-			done
+				while [ "$STRING" != "0" ]; 
+				do
+					if [[ "$STRING" == "0" ]]; then
+						break
+					fi
+					echo -e "\nYOUR MD5 HASH OF THE STRING:\n"
+					echo -e "${Purple}${STRING}"
+					echo -e "${Cyan}"
+					md5_hash_string
+					echo -e "${Reset}"
+					break
+				done
+			fi
+			if [[ "$AGR" == "2" ]]; then
+				echo -e "${Blue}SELECTED HASH ALGORITHM: SHA1"
+				echo -e "${Green}\nENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
+				echo -e "ENTER 0 TO RETURN TO THE MAIN MENU"
+				read STRING
+				if [[ "$STRING" == "0" ]]; then
+					break
+				fi
+				while [ "$STRING" != "0" ]; 
+				do
+					if [[ "$STRING" == "0" ]]; then
+						break
+					fi
+					echo -e "YOUR MD5 HASH OF THE STRING:\n"
+					echo -e "${Purple}${STRING}"
+					echo -e "${Cyan}"
+					s1_hash_string
+					echo -e "${Reset}"
+					break
+				done
+			fi
+			if [[ "$AGR" == "3" ]]; then
+				echo -e "${Blue}SELECTED HASH ALGORITHM: SHA256"
+				echo -e "${Green}\nENTER THE STRING THAT YOU WOULD LIKE TO CONVERT TO AN MD5 HASH"
+				echo -e "ENTER 0 TO RETURN TO THE MAIN MENU"
+				read STRING
+				if [[ "$STRING" == "0" ]]; then
+					break
+				fi
+				while [ "$STRING" != "0" ]; 
+				do
+					if [[ "$STRING" == "0" ]]; then
+						break
+					fi
+					echo -e "YOUR MD5 HASH OF THE STRING:\n"
+					echo -e "${Purple}${STRING}"
+					echo -e "${Cyan}"
+					s256_hash_string
+					echo -e "${Reset}"
+					break
+				done
+			fi
 		done
 	fi
+
 	if [[ "$INP" == "2" ]]; then
 		echo -e "${Cyan}READY TO GENERATE RANDOM HASHES!"
 		echo -e "HASH FILE IS CURRENTLY SET TO ${Green}${HASHLIST}"
